@@ -36,6 +36,8 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.del_btn1 = new System.Windows.Forms.Button();
             this.refresh_btn1 = new System.Windows.Forms.Button();
+            this.SelectAll_btn1 = new System.Windows.Forms.Button();
+            this.UnSelectAll_btn1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -44,6 +46,8 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.del_btn2 = new System.Windows.Forms.Button();
             this.refresh_btn2 = new System.Windows.Forms.Button();
+            this.SelectAll_btn2 = new System.Windows.Forms.Button();
+            this.UnSelectAll_btn2 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
@@ -72,8 +76,9 @@
             this.profileList.FormattingEnabled = true;
             this.profileList.HorizontalScrollbar = true;
             this.profileList.Location = new System.Drawing.Point(3, 23);
+            this.profileList.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.profileList.Name = "profileList";
-            this.profileList.Size = new System.Drawing.Size(360, 478);
+            this.profileList.Size = new System.Drawing.Size(360, 459);
             this.profileList.TabIndex = 1;
             this.profileList.SelectedIndexChanged += new System.EventHandler(this.profileList_SelectedIndexChanged);
             // 
@@ -90,7 +95,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel2);
-            this.splitContainer1.Size = new System.Drawing.Size(931, 510);
+            this.splitContainer1.Size = new System.Drawing.Size(931, 488);
             this.splitContainer1.SplitterDistance = 457;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -104,11 +109,12 @@
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 30);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 510F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(457, 510);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(457, 488);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // tableLayoutPanel3
@@ -123,12 +129,13 @@
             this.tableLayoutPanel3.RowCount = 2;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(366, 504);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(366, 482);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // label3
             // 
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.ForeColor = System.Drawing.Color.DarkGray;
             this.label3.Location = new System.Drawing.Point(3, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(360, 20);
@@ -139,16 +146,20 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.del_btn1);
             this.flowLayoutPanel1.Controls.Add(this.refresh_btn1);
+            this.flowLayoutPanel1.Controls.Add(this.SelectAll_btn1);
+            this.flowLayoutPanel1.Controls.Add(this.UnSelectAll_btn1);
             this.flowLayoutPanel1.Controls.Add(this.label1);
+            this.flowLayoutPanel1.Cursor = System.Windows.Forms.Cursors.Default;
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(375, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(79, 504);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(79, 482);
             this.flowLayoutPanel1.TabIndex = 5;
             // 
             // del_btn1
             // 
-            this.del_btn1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.del_btn1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.del_btn1.Font = new System.Drawing.Font("宋体", 7.5F);
             this.del_btn1.Location = new System.Drawing.Point(3, 3);
             this.del_btn1.Name = "del_btn1";
             this.del_btn1.Size = new System.Drawing.Size(75, 23);
@@ -159,7 +170,8 @@
             // 
             // refresh_btn1
             // 
-            this.refresh_btn1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.refresh_btn1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.refresh_btn1.Font = new System.Drawing.Font("宋体", 7.5F);
             this.refresh_btn1.Location = new System.Drawing.Point(3, 32);
             this.refresh_btn1.Name = "refresh_btn1";
             this.refresh_btn1.Size = new System.Drawing.Size(75, 23);
@@ -168,10 +180,34 @@
             this.refresh_btn1.UseVisualStyleBackColor = true;
             this.refresh_btn1.Click += new System.EventHandler(this.refresh_btn1_Click);
             // 
+            // SelectAll_btn1
+            // 
+            this.SelectAll_btn1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.SelectAll_btn1.Font = new System.Drawing.Font("宋体", 7.5F);
+            this.SelectAll_btn1.Location = new System.Drawing.Point(3, 61);
+            this.SelectAll_btn1.Name = "SelectAll_btn1";
+            this.SelectAll_btn1.Size = new System.Drawing.Size(75, 23);
+            this.SelectAll_btn1.TabIndex = 5;
+            this.SelectAll_btn1.Text = "Select All";
+            this.SelectAll_btn1.UseVisualStyleBackColor = true;
+            this.SelectAll_btn1.Click += new System.EventHandler(this.SelectAll_btn1_Click);
+            // 
+            // UnSelectAll_btn1
+            // 
+            this.UnSelectAll_btn1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.UnSelectAll_btn1.Font = new System.Drawing.Font("宋体", 7.5F);
+            this.UnSelectAll_btn1.Location = new System.Drawing.Point(3, 90);
+            this.UnSelectAll_btn1.Name = "UnSelectAll_btn1";
+            this.UnSelectAll_btn1.Size = new System.Drawing.Size(75, 23);
+            this.UnSelectAll_btn1.TabIndex = 6;
+            this.UnSelectAll_btn1.Text = "UnSelect All";
+            this.UnSelectAll_btn1.UseVisualStyleBackColor = true;
+            this.UnSelectAll_btn1.Click += new System.EventHandler(this.UnSelectAll_btn1_Click);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 58);
+            this.label1.Location = new System.Drawing.Point(3, 116);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 12);
             this.label1.TabIndex = 4;
@@ -187,10 +223,11 @@
             this.tableLayoutPanel2.Controls.Add(this.flowLayoutPanel2, 1, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(470, 510);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(470, 488);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
             // tableLayoutPanel4
@@ -205,12 +242,13 @@
             this.tableLayoutPanel4.RowCount = 2;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(379, 504);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(379, 482);
             this.tableLayoutPanel4.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.ForeColor = System.Drawing.Color.DarkGray;
             this.label4.Location = new System.Drawing.Point(3, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(373, 20);
@@ -223,8 +261,9 @@
             this.signatureUnamedList.FormattingEnabled = true;
             this.signatureUnamedList.HorizontalScrollbar = true;
             this.signatureUnamedList.Location = new System.Drawing.Point(3, 23);
+            this.signatureUnamedList.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.signatureUnamedList.Name = "signatureUnamedList";
-            this.signatureUnamedList.Size = new System.Drawing.Size(373, 478);
+            this.signatureUnamedList.Size = new System.Drawing.Size(373, 459);
             this.signatureUnamedList.TabIndex = 4;
             this.signatureUnamedList.SelectedIndexChanged += new System.EventHandler(this.signatureUnamedList_SelectedIndexChanged);
             // 
@@ -232,16 +271,20 @@
             // 
             this.flowLayoutPanel2.Controls.Add(this.del_btn2);
             this.flowLayoutPanel2.Controls.Add(this.refresh_btn2);
+            this.flowLayoutPanel2.Controls.Add(this.SelectAll_btn2);
+            this.flowLayoutPanel2.Controls.Add(this.UnSelectAll_btn2);
             this.flowLayoutPanel2.Controls.Add(this.label2);
+            this.flowLayoutPanel2.Cursor = System.Windows.Forms.Cursors.Default;
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel2.Location = new System.Drawing.Point(388, 3);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(79, 504);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(79, 482);
             this.flowLayoutPanel2.TabIndex = 6;
             // 
             // del_btn2
             // 
-            this.del_btn2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.del_btn2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.del_btn2.Font = new System.Drawing.Font("宋体", 7.5F);
             this.del_btn2.Location = new System.Drawing.Point(3, 3);
             this.del_btn2.Name = "del_btn2";
             this.del_btn2.Size = new System.Drawing.Size(75, 23);
@@ -252,7 +295,8 @@
             // 
             // refresh_btn2
             // 
-            this.refresh_btn2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.refresh_btn2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.refresh_btn2.Font = new System.Drawing.Font("宋体", 7.5F);
             this.refresh_btn2.Location = new System.Drawing.Point(3, 32);
             this.refresh_btn2.Name = "refresh_btn2";
             this.refresh_btn2.Size = new System.Drawing.Size(75, 23);
@@ -261,10 +305,34 @@
             this.refresh_btn2.UseVisualStyleBackColor = true;
             this.refresh_btn2.Click += new System.EventHandler(this.refresh_btn2_Click);
             // 
+            // SelectAll_btn2
+            // 
+            this.SelectAll_btn2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.SelectAll_btn2.Font = new System.Drawing.Font("宋体", 7.5F);
+            this.SelectAll_btn2.Location = new System.Drawing.Point(3, 61);
+            this.SelectAll_btn2.Name = "SelectAll_btn2";
+            this.SelectAll_btn2.Size = new System.Drawing.Size(75, 23);
+            this.SelectAll_btn2.TabIndex = 6;
+            this.SelectAll_btn2.Text = "Select All";
+            this.SelectAll_btn2.UseVisualStyleBackColor = true;
+            this.SelectAll_btn2.Click += new System.EventHandler(this.SelectAll_btn2_Click);
+            // 
+            // UnSelectAll_btn2
+            // 
+            this.UnSelectAll_btn2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.UnSelectAll_btn2.Font = new System.Drawing.Font("宋体", 7.5F);
+            this.UnSelectAll_btn2.Location = new System.Drawing.Point(3, 90);
+            this.UnSelectAll_btn2.Name = "UnSelectAll_btn2";
+            this.UnSelectAll_btn2.Size = new System.Drawing.Size(75, 23);
+            this.UnSelectAll_btn2.TabIndex = 7;
+            this.UnSelectAll_btn2.Text = "UnSelect All";
+            this.UnSelectAll_btn2.UseVisualStyleBackColor = true;
+            this.UnSelectAll_btn2.Click += new System.EventHandler(this.UnSelectAll_btn2_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 58);
+            this.label2.Location = new System.Drawing.Point(3, 116);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 12);
             this.label2.TabIndex = 5;
@@ -285,7 +353,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer1);
             this.splitContainer2.Size = new System.Drawing.Size(931, 573);
-            this.splitContainer2.SplitterDistance = 59;
+            this.splitContainer2.SplitterDistance = 81;
             this.splitContainer2.TabIndex = 3;
             // 
             // splitContainer3
@@ -301,7 +369,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.textBox2);
-            this.splitContainer3.Size = new System.Drawing.Size(931, 59);
+            this.splitContainer3.Size = new System.Drawing.Size(931, 81);
             this.splitContainer3.SplitterDistance = 457;
             this.splitContainer3.TabIndex = 1;
             // 
@@ -314,7 +382,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(457, 59);
+            this.textBox1.Size = new System.Drawing.Size(457, 81);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "Profile Info";
             // 
@@ -327,7 +395,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
             this.textBox2.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox2.Size = new System.Drawing.Size(470, 59);
+            this.textBox2.Size = new System.Drawing.Size(470, 81);
             this.textBox2.TabIndex = 1;
             this.textBox2.Text = "Unsignaure Unamed Info";
             // 
@@ -386,6 +454,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button SelectAll_btn1;
+        private System.Windows.Forms.Button UnSelectAll_btn1;
+        private System.Windows.Forms.Button SelectAll_btn2;
+        private System.Windows.Forms.Button UnSelectAll_btn2;
     }
 }
 

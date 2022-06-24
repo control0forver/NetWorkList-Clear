@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace NetWorkList_Clear
@@ -28,7 +29,10 @@ namespace NetWorkList_Clear
         private void NWLC_Load(object sender, EventArgs e)
         {
             //Init
-            MessageBox.Show("");
+            DialogResult dialogResult;
+            dialogResult = MessageBox.Show("NWLC --- NetWorkList Clear is an open-source project,\r\nyou can visit https://github.com/control0forver/NetWorkList-Clear to see it.\r\nOpen browser?", "Hello, I'm NWLC", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            if (dialogResult == DialogResult.Yes)
+                Process.Start("https://github.com/control0forver/NetWorkList-Clear");
 
             // Profile
             Profile = registryKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles");
@@ -41,7 +45,7 @@ namespace NetWorkList_Clear
             {
                 Profile_Descriptions[i] = Profile.OpenSubKey(Profile_folders[i]).GetValue("Description").ToString();
                 Profile_Names[i] = Profile.OpenSubKey(Profile_folders[i]).GetValue("ProfileName").ToString();
-                Profile_List[i] =  Profile_Descriptions[i];
+                Profile_List[i] = Profile_Descriptions[i];
             }
             profileList.Items.AddRange(Profile_List);
             label1.Text = profileList.Items.Count + " Items";
@@ -53,7 +57,7 @@ namespace NetWorkList_Clear
             SignatureUnamed_Descriptions = new string[SignatureUnamed_folders.Length];
             SignatureUnamed_Names = new string[SignatureUnamed_folders.Length];
             SignatureUnamed_List = new string[SignatureUnamed_folders.Length];
-            for (int i = 0; i < Profile_folders.Length; i++)
+            for (int i = 0; i < SignatureUnamed_folders.Length; i++)
             {
                 SignatureUnamed_Descriptions[i] = SignatureUnamed.OpenSubKey(SignatureUnamed_folders[i]).GetValue("Description").ToString();
                 SignatureUnamed_Names[i] = SignatureUnamed.OpenSubKey(SignatureUnamed_folders[i]).GetValue("FirstNetwork").ToString();
@@ -70,7 +74,7 @@ namespace NetWorkList_Clear
 
             Info = "Profile Info" +
                 "\r\nNetwork Name(Description): " + Profile.OpenSubKey(Profile_folders[i]).GetValue("Description").ToString() +
-                "\r\nReal Network Name: " + Profile.OpenSubKey(Profile_folders[i]).GetValue("ProfileName").ToString() + 
+                "\r\nReal Network Name: " + Profile.OpenSubKey(Profile_folders[i]).GetValue("ProfileName").ToString() +
                 "\r\nProfile Folder Name: " + Profile_folders[i];
 
             textBox1.Text = Info;
@@ -91,6 +95,8 @@ namespace NetWorkList_Clear
 
         private void refresh_btn1_Click(object sender, EventArgs e)
         {
+            profileList.Items.Clear();
+
             Profile = registryKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles");
             Profile_folders = Profile.GetSubKeyNames();
 
@@ -109,13 +115,15 @@ namespace NetWorkList_Clear
 
         private void refresh_btn2_Click(object sender, EventArgs e)
         {
+            signatureUnamedList.Items.Clear();
+
             SignatureUnamed = registryKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\Unmanaged");
             SignatureUnamed_folders = SignatureUnamed.GetSubKeyNames();
 
             SignatureUnamed_Descriptions = new string[SignatureUnamed_folders.Length];
             SignatureUnamed_Names = new string[SignatureUnamed_folders.Length];
             SignatureUnamed_List = new string[SignatureUnamed_folders.Length];
-            for (int i = 0; i < Profile_folders.Length; i++)
+            for (int i = 0; i < SignatureUnamed_folders.Length; i++)
             {
                 SignatureUnamed_Descriptions[i] = SignatureUnamed.OpenSubKey(SignatureUnamed_folders[i]).GetValue("Description").ToString();
                 SignatureUnamed_Names[i] = SignatureUnamed.OpenSubKey(SignatureUnamed_folders[i]).GetValue("FirstNetwork").ToString();
@@ -125,14 +133,105 @@ namespace NetWorkList_Clear
             label2.Text = signatureUnamedList.Items.Count + " Items";
         }
 
+        private bool AreYouSure()
+        {
+            DialogResult dialogResult = MessageBox.Show("Are you sure to DELETE?\r\nThe item you selected will be DELETED!!", "ARE YOU SURE?", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            if (dialogResult == DialogResult.Cancel) return false;
+            return true;
+        }
+
         private void del_btn1_Click(object sender, EventArgs e)
         {
+            if (!AreYouSure()) return;
+
+            // Get checked item index
+            int[] checkedIndex = new int[profileList.Items.Count];
+            int _i = 0;
+            for (int i = 0; i < profileList.Items.Count; i++)
+            {
+                if (profileList.GetItemChecked(i))
+                {
+                    checkedIndex[_i] = i;
+                    _i++;
+                }
+            }
+
+            RegistryKey sys = registryKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles", true);
+            // Delete Profiles
+            for (int i = 0; i < profileList.CheckedItems.Count; i++)
+            {
+                try
+                {
+                    sys.DeleteSubKeyTree(Profile_folders[checkedIndex[i]]);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                    return;
+                }
+            }
+
+            MessageBox.Show("Delete Success.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             refresh_btn1.PerformClick();
         }
 
         private void del_btn2_Click(object sender, EventArgs e)
         {
+            if (!AreYouSure()) return;
+
+            // Get checked item index
+            int[] checkedIndex = new int[signatureUnamedList.Items.Count];
+            int _i = 0;
+            for (int i = 0; i < signatureUnamedList.Items.Count; i++)
+            {
+                if (signatureUnamedList.GetItemChecked(i))
+                {
+                    checkedIndex[_i] = i;
+                    _i++;
+                }
+            }
+
+            RegistryKey sys = registryKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\Unmanaged", true);
+            // Delete SignatureUnamed
+            for (int i = 0; i < signatureUnamedList.CheckedItems.Count; i++)
+            {
+                try
+                {
+                    sys.DeleteSubKeyTree(SignatureUnamed_folders[checkedIndex[i]]);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error");
+                    return;
+                }
+            }
+
+            MessageBox.Show("Delete Success.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             refresh_btn2.PerformClick();
+        }
+
+        private void SelectAll_btn1_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < profileList.Items.Count; i++)
+                profileList.SetItemChecked(i, true);
+        }
+
+        private void UnSelectAll_btn1_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < profileList.Items.Count; i++)
+                profileList.SetItemChecked(i, false);
+        }
+
+        private void SelectAll_btn2_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < signatureUnamedList.Items.Count; i++)
+                signatureUnamedList.SetItemChecked(i, true);
+        }
+
+        private void UnSelectAll_btn2_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < signatureUnamedList.Items.Count; i++)
+                signatureUnamedList.SetItemChecked(i, false);
         }
     }
 }
