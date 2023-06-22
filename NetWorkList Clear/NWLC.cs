@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace NetWorkList_Clear
 {
@@ -10,6 +12,14 @@ namespace NetWorkList_Clear
         public NWLC()
         {
             InitializeComponent();
+
+            InfoThread = new Thread(() =>
+            {
+                DialogResult dialogResult;
+                dialogResult = MessageBox.Show("NWLC --- NetWorkList Clear is an open-source project,\r\nyou can visit https://github.com/control0forver/NetWorkList-Clear to see it.\r\nOpen browser?", "Hello, I'm NWLC", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (dialogResult == DialogResult.Yes)
+                    Process.Start("https://github.com/control0forver/NetWorkList-Clear");
+            });
         }
 
         private RegistryKey registryKey = Registry.LocalMachine;
@@ -19,23 +29,24 @@ namespace NetWorkList_Clear
         private string[] Profile_Descriptions;
         private string[] Profile_Names;
         private string[] Profile_List;
+        public readonly string Profile_Path =@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles";
 
         private RegistryKey SignatureUnamed;
         private string[] SignatureUnamed_folders;
         private string[] SignatureUnamed_Descriptions;
         private string[] SignatureUnamed_Names;
         private string[] SignatureUnamed_List;
+        public readonly string SignatureUnamed_Path = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\Unmanaged";
+
+        private Thread InfoThread = null;
 
         private void NWLC_Load(object sender, EventArgs e)
         {
             //Init
-            DialogResult dialogResult;
-            dialogResult = MessageBox.Show("NWLC --- NetWorkList Clear is an open-source project,\r\nyou can visit https://github.com/control0forver/NetWorkList-Clear to see it.\r\nOpen browser?", "Hello, I'm NWLC", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-            if (dialogResult == DialogResult.Yes)
-                Process.Start("https://github.com/control0forver/NetWorkList-Clear");
+            InfoThread.Start();
 
             // Profile
-            Profile = registryKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles");
+            Profile = registryKey.OpenSubKey(Profile_Path);
             Profile_folders = Profile.GetSubKeyNames();
 
             Profile_Descriptions = new string[Profile_folders.Length];
@@ -51,7 +62,7 @@ namespace NetWorkList_Clear
             label1.Text = profileList.Items.Count + " Items";
 
             // SignatureUnamed
-            SignatureUnamed = registryKey.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\Unmanaged");
+            SignatureUnamed = registryKey.OpenSubKey(SignatureUnamed_Path);
             SignatureUnamed_folders = SignatureUnamed.GetSubKeyNames();
 
             SignatureUnamed_Descriptions = new string[SignatureUnamed_folders.Length];
@@ -73,6 +84,7 @@ namespace NetWorkList_Clear
             int i = profileList.SelectedIndex;
 
             Info = "Profile Info" +
+                "\r\n (on "+ Profile_Path +")"+
                 "\r\nNetwork Name(Description): " + Profile.OpenSubKey(Profile_folders[i]).GetValue("Description").ToString() +
                 "\r\nReal Network Name: " + Profile.OpenSubKey(Profile_folders[i]).GetValue("ProfileName").ToString() +
                 "\r\nProfile Folder Name: " + Profile_folders[i];
@@ -86,6 +98,7 @@ namespace NetWorkList_Clear
             int i = signatureUnamedList.SelectedIndex;
 
             Info = "Unsignaure Unamed Info" +
+                "\r\n (on " + SignatureUnamed_Path + ")" +
                 "\r\nNetwork Name(Description): " + SignatureUnamed.OpenSubKey(SignatureUnamed_folders[i]).GetValue("Description").ToString() +
                 "\r\nFirstNetwork Name: " + SignatureUnamed.OpenSubKey(SignatureUnamed_folders[i]).GetValue("FirstNetwork").ToString() +
                 "\r\nProfile Folder Name: " + SignatureUnamed_folders[i];

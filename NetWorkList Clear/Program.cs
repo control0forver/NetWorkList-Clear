@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace NetWorkList_Clear
@@ -26,6 +27,8 @@ namespace NetWorkList_Clear
                 MessageBox.Show("We need Administrator.", "Administrator required", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
+
+            Thread.CurrentThread.IsBackground = true;
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
